@@ -26,5 +26,6 @@ public class PlaywrightTest {
     Page page = browser.newPage();
     page.navigate("https://playwright.dev/");
     assertTrue(page.title().contains("Playwright"));
+    assertTrue(page.title().contains("Playwright"));
   }
 }
