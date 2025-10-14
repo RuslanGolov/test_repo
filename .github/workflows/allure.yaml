@@ -15,21 +15,15 @@ jobs:
       - name: Run tests
         run: ./gradlew clean test
 
-      - name: Load test report history
-        uses: actions/checkout@v3
+      - name: Generate Allure report
         if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+        run: ./gradlew allureReport --no-configuration-cache
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
+      - name: Debug report folders
         if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: build/allure-results
+        run: |
+          echo "Listing build folder:"
+          ls -R build || true
 
       - name: Upload Allure report artifact
         if: always()
@@ -37,7 +31,31 @@ jobs:
         with:
           name: allure-report
           path: build/reports/allure-report
-          if-no-files-found: ignore
+          if-no-files-found: warn
+
+#      - name: Load test report history
+#        uses: actions/checkout@v3
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages
+#
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.7
+#        if: always()
+#        with:
+#          gh_pages: gh-pages
+#          allure_history: allure-history
+#          allure_results: build/allure-results
+
+#      - name: Upload Allure report artifact
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-report
+#          path: build/reports/allure-report
+#          if-no-files-found: ignore
 
 #      - name: Publish test report
 #        uses: peaceiris/actions-gh-pages@v3
