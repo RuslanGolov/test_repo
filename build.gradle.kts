@@ -31,6 +31,18 @@ sourceSets {
   }
 }
 
+allure {
+  version.set("2.35.1") // Allure CLI
+  adapter {
+    frameworks {
+      junit5 {
+        adapterVersion.set("2.30.0")
+      }
+    }
+    aspectjWeaver.set(true)
+  }
+}
+
 tasks.test {
   useJUnitPlatform()
 }
