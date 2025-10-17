@@ -5,7 +5,7 @@ inputs:
     description: "GitHub token for authentication"
     required: true
 runs:
-  using: composite
+  using: "composite"
   steps:
     - name: Load test report history
       uses: actions/checkout@v3
