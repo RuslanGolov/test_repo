@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Oct 21 14:42:28 GMT 2025","Tue Oct 21 14:42:28 GMT 2025","2","","com.example.InfoTest","","com.example.InfoTest","test2","test2()",""
+"passed","Tue Oct 21 14:42:28 GMT 2025","Tue Oct 21 14:42:28 GMT 2025","0","","com.example.InfoTest","","com.example.InfoTest","test3","test3()",""
+"passed","Tue Oct 21 14:42:28 GMT 2025","Tue Oct 21 14:42:28 GMT 2025","62","","com.example.InfoTest","","com.example.InfoTest","test1","test1()",""
