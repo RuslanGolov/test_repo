@@ -15,17 +15,17 @@ jobs:
           distribution: zulu
           java-version: 17
 
-      - name: Grant execute permission for Gradlew
-        run: git update-index --chmod=+x gradlew
-        shell: bash
+#      - name: Grant execute permission for Gradlew
+#        run: git update-index --chmod=+x gradlew
+#        shell: bash
+#
+#      - name: Run tests
+#        run: ./gradlew clean test
+#        shell: bash
 
       - name: Run tests
-        run: ./gradlew clean test
-        shell: bash
-
-#      - name: Run tests
-#        run: ./gradlew.bat clean test
-#        shell: powershell
+        run: ./gradlew.bat clean test
+        shell: powershell
 
       - name: Upload Allure results
         if: always()
@@ -78,3 +78,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: build/reports/allure-report
