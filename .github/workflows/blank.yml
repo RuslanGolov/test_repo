@@ -27,6 +27,20 @@ jobs:
 #        run: ./gradlew.bat clean test
 #        shell: powershell
 
+      - name: Upload test reports111
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports1
+          path: build/reports/tests/test
+
+      - name: Upload test reports222
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports2
+          path: build
+
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
