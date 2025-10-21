@@ -1,8 +1,8 @@
-name: Run tests and publish report
+name: On windows
 on: [push]
 jobs:
   test:
-    name: "Run all tests"
+    name: "Run all tests on windows"
     runs-on: windows-latest
     permissions:
       contents: write
@@ -23,33 +23,45 @@ jobs:
         run: ./gradlew clean test
         shell: bash
 
-      - name: Upload test reports
+      - name: Generate Allure HTML report
+        run: .\gradlew.bat :e2e-tests:allureReport
+        shell: powershell
+
+      # 👇 Save the generated report as a workflow artifact
+      - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
-          path: build/reports/tests/test
+          name: allure-report
+          path: e2e-tests/build/reports/allure-report/allureReport
 
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: build/allure-results
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+#      - name: Upload test reports
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: test-reports
+#          path: build/reports/tests/test
+#
+#      - name: Load test report history
+#        uses: actions/checkout@v3
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages
+#
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.7
+#        if: always()
+#        with:
+#          gh_pages: gh-pages
+#          allure_history: allure-history
+#          allure_results: build/allure-results
+#
+#      - name: Publish test report
+#        uses: peaceiris/actions-gh-pages@v3
+#        if: always()
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: allure-history

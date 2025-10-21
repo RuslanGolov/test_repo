@@ -11,7 +11,7 @@ dependencies {
   // Playwright Java
   testImplementation("io.qameta.allure:allure-junit5:2.30.0")
 
-  testImplementation("com.microsoft.playwright:playwright:1.46.0")
+//  testImplementation("com.microsoft.playwright:playwright:1.46.0")
 
   // JUnit 5 for tests
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
