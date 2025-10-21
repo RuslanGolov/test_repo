@@ -34,17 +34,6 @@ jobs:
           name: allure-results1
           path: build/allure-results
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: build/allure-results
-      - name: Upload Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report1
-          path: build
 
   test2:
     name: "Run all tests on windows2"
@@ -79,18 +68,6 @@ jobs:
           name: allure-results2
           path: build/allure-results
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: build/allure-results
-      - name: Upload Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report2
-          path: build
-
   allure-report:
     name: "Generate Allure HTML report"
     needs: [ test, test2 ]
@@ -111,12 +88,12 @@ jobs:
         with:
           path: merged-results
 
-      # Merge all allure-results folders into one
-#      - name: Merge allure results
-#        run: |
-#          mkdir -p build/allure-results
-#          cp -r merged-results/allure-results1/* build/allure-results/ || true
-#          cp -r merged-results/allure-results2/* build/allure-results/ || true
+#       Merge all allure-results folders into one
+      - name: Merge allure results
+        run: |
+          mkdir -p build/allure-results
+          cp -r merged-results/allure-results1/* build/allure-results/ || true
+          cp -r merged-results/allure-results2/* build/allure-results/ || true
 
       - name: Load test report history
         uses: actions/checkout@v3
@@ -148,3 +125,27 @@ jobs:
         with:
           name: allure-results333
           path: build/allure-results
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_results: build/allure-results1
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report111111
+          path: build
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_results: build/allure-results2
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report222222
+          path: build
