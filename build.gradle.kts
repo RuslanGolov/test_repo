@@ -1,3 +1,6 @@
+import io.qameta.allure.gradle.report.tasks.AllureReport
+import io.qameta.allure.gradle.report.tasks.AllureServe
+
 plugins {
   java
   id("io.qameta.allure") version "3.0.0"
@@ -45,4 +48,17 @@ allure {
 
 tasks.test {
   useJUnitPlatform()
+}
+
+
+tasks.withType<AllureReport>().configureEach {
+  notCompatibleWithConfigurationCache(
+    "AllureReport task is not configuration-cache compatible (DefaultProperty serialization issue)"
+  )
+}
+
+tasks.withType<AllureServe>().configureEach {
+  notCompatibleWithConfigurationCache(
+    "AllureServe task is not configuration-cache compatible"
+  )
 }
