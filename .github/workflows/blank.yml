@@ -27,26 +27,12 @@ jobs:
 #        run: ./gradlew.bat clean test
 #        shell: powershell
 
-      - name: Upload test reports111
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports1
-          path: build/reports/tests/test
-
-      - name: Upload test reports222
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports2
-          path: build
-
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: e2e-tests/build/allure-results
+          path: build/allure-results
 
   allure-report:
     name: "Generate Allure HTML report"
@@ -67,7 +53,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-results
-          path: e2e-tests/build/allure-results
+          path: build/allure-results
 
       - name: Load test report history
         uses: actions/checkout@v3
@@ -83,7 +69,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: e2e-tests/build/allure-results
+          allure_results: build/allure-results
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
