@@ -1,7 +1,7 @@
 name: On windows
 on: [push]
 jobs:
-  test:
+  e2e-tests-ubuntu:
     name: "Run all tests on linux"
     runs-on: linux-latest
     permissions:
@@ -16,8 +16,8 @@ jobs:
           java-version: 17
 
       - name: Run tests
+        shell: bash
         run: ./gradlew clean test
-        shell: powershell
 
       - name: Upload Allure results
         if: always()
@@ -30,10 +30,38 @@ jobs:
         run: |
           echo "🧾 The Allure report will be available at:"
           echo "➡️ https://ruslangolov.github.io/test_repo/"
-        shell: powershell
 
+  e2e-tests-mac:
+    name: "Run all tests on mac"
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
 
-  test2:
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Run tests
+        shell: bash
+        run: ./gradlew clean test
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results2
+          path: build/allure-results
+
+      - name: Report Link
+        run: |
+          echo "🧾 The Allure report will be available at:"
+          echo "➡️ https://ruslangolov.github.io/test_repo/"
+
+  e2e-tests-windows:
     name: "Run all tests on windows"
     runs-on: windows-latest
     permissions:
@@ -55,7 +83,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results2
+          name: allure-results3
           path: build/allure-results
 
       - name: Report Link
@@ -65,7 +93,7 @@ jobs:
 
   allure-report:
     name: "Generate Allure HTML report"
-    needs: [ test, test2 ]
+    needs: [ e2e-tests-ubuntu, e2e-tests-mac, e2e-tests-windows ]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -89,6 +117,7 @@ jobs:
           mkdir -p build/allure-results
           cp -r merged-results/allure-results1/* build/allure-results/ || true
           cp -r merged-results/allure-results2/* build/allure-results/ || true
+          cp -r merged-results/allure-results3/* build/allure-results/ || true
 
       - name: Load test report history
         uses: actions/checkout@v3
