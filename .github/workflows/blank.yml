@@ -110,6 +110,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: build/allure-results
+#          allure_report: build/allure-report
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -117,35 +118,42 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-historyr
+          publish_dir: allure-history
+          commit_message: "Deploy Allure report for commit ${{ github.sha }}"
+          full_commit_message: |
+            Deploy Allure report for commit:
+            ${{ github.sha }}
+            ${{ github.event.head_commit.message }}
+            https://github.com/${{ github.repository }}/commit/${{ github.sha }}
 
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results333
-          path: build/allure-results
+          path: allure-history
+#          allure_report: build/allure-report
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: build/allure-results1
-      - name: Upload Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report111111
-          path: build
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: build/allure-results2
-      - name: Upload Allure report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report222222
-          path: build
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.7
+#        if: always()
+#        with:
+#          allure_results: build/allure-results1
+#      - name: Upload Allure report
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-report111111
+#          path: build
+#
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.7
+#        if: always()
+#        with:
+#          allure_results: build/allure-results2
+#      - name: Upload Allure report
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-report222222
+#          path: build
