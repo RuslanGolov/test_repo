@@ -48,17 +48,17 @@ allure {
 
 tasks.test {
   useJUnitPlatform()
+//  finalizedBy("allureReport")
 }
 
-
-tasks.withType<AllureReport>().configureEach {
-  notCompatibleWithConfigurationCache(
-    "AllureReport task is not configuration-cache compatible (DefaultProperty serialization issue)"
-  )
-}
-
-tasks.withType<AllureServe>().configureEach {
-  notCompatibleWithConfigurationCache(
-    "AllureServe task is not configuration-cache compatible"
-  )
-}
+//tasks.withType<AllureReport>().configureEach {
+//  notCompatibleWithConfigurationCache(
+//    "AllureReport task is not configuration-cache compatible (DefaultProperty serialization issue)"
+//  )
+//  clean.set(true)
+//}
+//tasks.withType<AllureServe>().configureEach {
+//  notCompatibleWithConfigurationCache(
+//    "AllureServe task is not configuration-cache compatible"
+//  )
+//}
