@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Oct 23 08:34:45 GMT 2025","Thu Oct 23 08:34:45 GMT 2025","0","","Mac OS X","","com.example.InfoTest","test3","test3() [Mac OS X] [Mac OS X]",""
+"passed","Thu Oct 23 08:34:45 GMT 2025","Thu Oct 23 08:34:45 GMT 2025","1","","Mac OS X","","com.example.InfoTest","test2","test2() [Mac OS X] [Mac OS X]",""
+"passed","Thu Oct 23 08:34:45 GMT 2025","Thu Oct 23 08:34:45 GMT 2025","37","","Mac OS X","","com.example.InfoTest","test1","test1() [Mac OS X] [Mac OS X]",""
