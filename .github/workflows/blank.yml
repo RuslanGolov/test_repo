@@ -54,6 +54,7 @@ jobs:
 
       - name: Verify Docker
         run: |
+          docker run hello-world
           docker version
           docker run hello-world
 
