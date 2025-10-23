@@ -47,12 +47,9 @@ jobs:
 
       - name: upgrade bash
         shell: bash
-        run: brew update && brew install bash
-
-      - name: check version
-        shell: bash
-        run: bash --version
-
+        run: |
+          brew update && brew install bash
+          bash --version
 
       - name: Run tests
         shell: bash
