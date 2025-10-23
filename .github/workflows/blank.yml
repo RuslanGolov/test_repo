@@ -46,7 +46,9 @@ jobs:
           java-version: 17
 
       - name: Setup Docker on macOS
-        run: brew install docker
+        run: |
+          brew install colima
+          colima start
       #        uses: douglascamata/setup-docker-macos-action@v1
 
 
