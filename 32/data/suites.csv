@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed Oct 22 11:03:38 GMT 2025","Wed Oct 22 11:03:38 GMT 2025","52","","Windows Server 2025","","com.example.InfoTest","test1","test1() [Windows Server 2025] [Windows Server 2025]",""
+"passed","Wed Oct 22 11:03:38 GMT 2025","Wed Oct 22 11:03:38 GMT 2025","2","","Windows Server 2025","","com.example.InfoTest","test3","test3() [Windows Server 2025] [Windows Server 2025]",""
+"passed","Wed Oct 22 11:03:38 GMT 2025","Wed Oct 22 11:03:38 GMT 2025","2","","Windows Server 2025","","com.example.InfoTest","test2","test2() [Windows Server 2025] [Windows Server 2025]",""
