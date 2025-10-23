@@ -1,5 +1,5 @@
 name: On windows
-on: [push]
+on: [ push ]
 jobs:
   e2e-tests-ubuntu:
     name: "Run all tests on linux"
@@ -46,7 +46,9 @@ jobs:
           java-version: 17
 
       - name: Setup Docker on macOS
-        uses: douglascamata/setup-docker-macos-action@v1
+        run: brew install docker
+      #        uses: douglascamata/setup-docker-macos-action@v1
+
 
       - name: Verify Docker
         run: |
@@ -125,7 +127,7 @@ jobs:
         with:
           path: merged-results
 
-#       Merge all allure-results folders into one
+      #       Merge all allure-results folders into one
       - name: Merge allure results
         run: |
           mkdir -p build/allure-results
@@ -148,7 +150,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: build/allure-results
-#          allure_report: build/allure-report
+      #          allure_report: build/allure-report
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
