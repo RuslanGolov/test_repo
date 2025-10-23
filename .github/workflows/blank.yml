@@ -33,7 +33,7 @@ jobs:
 
   e2e-tests-mac:
     name: "Run all tests on mac"
-    runs-on: macos-latest
+    runs-on: macos-15
     permissions:
       contents: write
     steps:
