@@ -1,89 +1,94 @@
 name: On windows
 on: [ push ]
 jobs:
-  e2e-tests-ubuntu:
-    name: "Run all tests on linux"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: 17
-
-      - name: Run tests
-        shell: bash
-        run: ./gradlew clean test
-
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results1
-          path: build/allure-results
-
-      - name: Report Link
-        run: |
-          echo "🧾 The Allure report will be available at:"
-          echo "➡️ https://ruslangolov.github.io/test_repo/"
-
-  e2e-tests-mac:
-    name: "Run all tests on mac"
-    runs-on: macos-15-large
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: 17
-
-      - name: Setup Docker on macOS
-        uses: douglascamata/setup-docker-macos-action@v1.0.1
-
-#      - name: Setup Docker on macOS
+#  e2e-tests-ubuntu:
+#    name: "Run all tests on linux"
+#    runs-on: ubuntu-latest
+#    needs: docker-host
+#    env:
+#      DOCKER_HOST: ${{ needs.docker-host.outputs.docker_host }}
+#      TESTCONTAINERS_RYUK_DISABLED: true
+#    permissions:
+#      contents: write
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: zulu
+#          java-version: 17
+#
+#      - name: Run tests
+#        shell: bash
+#        run: ./gradlew clean test
+#
+#      - name: Upload Allure results
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-results1
+#          path: build/allure-results
+#
+#      - name: Report Link
 #        run: |
-#          brew install docker
-#          brew install colima
-#          colima start
-
-      #        uses: douglascamata/setup-docker-macos-action@v1
-
-
-      - name: Verify Docker
-        run: |
-          docker run hello-world
-          docker version
-          docker run hello-world
-
-      - name: upgrade bash
-        shell: bash
-        run: |
-          brew update && brew install bash
-          bash --version
-
-      - name: Run tests
-        shell: bash
-        run: ./gradlew clean test
-
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results2
-          path: build/allure-results
-
-      - name: Report Link
-        run: |
-          echo "🧾 The Allure report will be available at:"
-          echo "➡️ https://ruslangolov.github.io/test_repo/"
+#          echo "🧾 The Allure report will be available at:"
+#          echo "➡️ https://ruslangolov.github.io/test_repo/"
+#
+#  e2e-tests-mac:
+#    name: "Run all tests on mac"
+#    runs-on: macos-15-large
+#    permissions:
+#      contents: write
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: zulu
+#          java-version: 17
+#
+#      - name: Setup Docker on macOS
+#        uses: douglascamata/setup-docker-macos-action@v1.0.1
+#
+##      - name: Setup Docker on macOS
+##        run: |
+##          brew install docker
+##          brew install colima
+##          colima start
+#
+#      #        uses: douglascamata/setup-docker-macos-action@v1
+#
+#
+#      - name: Verify Docker
+#        run: |
+#          docker run hello-world
+#          docker version
+#          docker run hello-world
+#
+#      - name: upgrade bash
+#        shell: bash
+#        run: |
+#          brew update && brew install bash
+#          bash --version
+#
+#      - name: Run tests
+#        shell: bash
+#        run: ./gradlew clean test
+#
+#      - name: Upload Allure results
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-results2
+#          path: build/allure-results
+#
+#      - name: Report Link
+#        run: |
+#          echo "🧾 The Allure report will be available at:"
+#          echo "➡️ https://ruslangolov.github.io/test_repo/"
 
   e2e-tests-windows:
     name: "Run all tests on windows"
@@ -100,8 +105,12 @@ jobs:
           java-version: 17
 
       - name: Run tests
-        run: cli_path=$(pwd)/extracted/ ./gradlew.bat clean test -PrunE2ETests -Pgithub
+        run: ./gradlew.bat clean test -PrunE2ETests -Pgithub
+#        run: cli_path=$(pwd)/extracted/ ./gradlew.bat clean test -PrunE2ETests -Pgithub
         shell: powershell
+
+      - name: Verify Docker is alive
+        run: docker run hello-world
 
       - name: Upload Allure results
         if: always()
@@ -117,7 +126,8 @@ jobs:
 
   allure-report:
     name: "Generate Allure HTML report"
-    needs: [ e2e-tests-ubuntu, e2e-tests-mac, e2e-tests-windows ]
+    needs: [ e2e-tests-windows ]
+#    needs: [ e2e-tests-ubuntu, e2e-tests-mac, e2e-tests-windows ]
     runs-on: ubuntu-latest
     if: always()
     steps:
