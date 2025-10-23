@@ -3,7 +3,7 @@ on: [push]
 jobs:
   e2e-tests-ubuntu:
     name: "Run all tests on linux"
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
