@@ -45,6 +45,15 @@ jobs:
           distribution: zulu
           java-version: 17
 
+      - name: upgrade bash
+        shell: bash
+        run: brew update && brew install bash
+
+      - name: check version
+        shell: bash
+        run: bash --version
+
+
       - name: Run tests
         shell: bash
         run: ./gradlew clean test
